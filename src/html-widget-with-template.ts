@@ -30,8 +30,6 @@ export class HtmlWidgetWithTemplate extends Widget implements SingleData {
 
     private getSeriesOptions() {
         const { columnsByBlock } = this.dataSettings;
-        console.log("this.dataSettings", this.dataSettings);
-
 
         let seriesOptions: [] = [];
         let categories: Column[] | null[] | [] = [];
@@ -76,8 +74,6 @@ export class HtmlWidgetWithTemplate extends Widget implements SingleData {
         const series: [][] = this.getSeriesOptions();
         const serie: [] = series[0];
 
-        console.log(serie);
-
         let tplString = settings[EViewOption.HTML];
 
         const jsTags = new RegExp('javascript|link|meta|css|iframe', 'gim');
@@ -86,10 +82,12 @@ export class HtmlWidgetWithTemplate extends Widget implements SingleData {
 
         let tplArr = tplString.match(/<%= .{3,}? %>/gim) || [];
 
+
         tplArr.forEach((tpl) => {
             const clearTpl = tpl.replace(/^<%= | %>$/gi, '');
             let newTpl = getRegExpTpl(clearTpl, serie);
             let newTplString = newTpl.toString();
+
 
             if (
                 !isNaN(parseInt(newTpl)) &&
@@ -98,10 +96,14 @@ export class HtmlWidgetWithTemplate extends Widget implements SingleData {
                 if (/\.|,/.test(newTplString)) {
                     const decimal = settings[EViewOption.Decimal];
 
+                    // Ежели, число с деситичной дробью
                     if (+decimal) {
+                        // Вытягиваем целую часть и после запятой
                         let [int, float] = newTplString.split(/\.|,/);
+                        // Обрезаем дробную часть до 2х знаков
                         float = float.slice(0, decimal);
-                        newTpl = [int, float].join(',');
+                        // Соединяем в строку и добавляем пробелы
+                        newTpl = [int, float].join(',').replace(/\B(?=(\d{3})+(?!\d))/g, " ");
                     }
                 }
 
