@@ -1,0 +1,7 @@
+node_modules/
+
+widget/*.js
+widget/*.zip
+widget/config.json
+
+.ptnl-devtools/

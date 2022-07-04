@@ -1,0 +1,29 @@
+{
+    "name": "html-widget-with-template",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "ptnl-constructor-devtools --webpack-config ./webpack.config.js",
+        "build": "ptnl-constructor build --webpack-config ./webpack.config.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/misharineugene/echrts-line-m.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/misharineugene/echrts-line-m/issues"
+    },
+    "homepage": "https://github.com/misharineugene/echrts-line-m#readme",
+    "devDependencies": {
+        "ptnl-constructor-cli": "^0.7.57",
+        "ptnl-constructor-devtools": "^0.7.42"
+    },
+    "dependencies": {
+        "ptnl-constructor-sdk": "^0.7.144"
+    }
+}

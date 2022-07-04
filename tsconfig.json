@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "rootDir": "src",
+        "experimentalDecorators": true,
+        "declaration": false,
+        "sourceMap": true,
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "target": "ES2015",
+        "lib": ["ESNEXT", "DOM"]
+    },
+    "include": ["src/**/*.ts"]
+}
