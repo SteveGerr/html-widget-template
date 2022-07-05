@@ -82,12 +82,11 @@ export class HtmlWidgetWithTemplate extends Widget implements SingleData {
 
         let tplArr = tplString.match(/<%= .{3,}? %>/gim) || [];
 
-
         tplArr.forEach((tpl) => {
+            // Вырезаем имя колонки. <%= col_5 %> => col_5
             const clearTpl = tpl.replace(/^<%= | %>$/gi, '');
             let newTpl = getRegExpTpl(clearTpl, serie);
             let newTplString = newTpl.toString();
-
 
             if (
                 !isNaN(parseInt(newTpl)) &&
