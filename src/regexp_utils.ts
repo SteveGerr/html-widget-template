@@ -13,6 +13,11 @@ export const getRegExpTpl = (tpl, data) => {
         tpl = getPercentToTpl(tpl, data);
     }
 
+    if (/_percent_of_/.test(tpl)) {
+        console.log("getPercentToTplMinusNum");
+        tpl = getPercentToTplMinusNum(tpl, data);
+    }
+
     if (/first_/gim.test(tpl)) {
         index = 0;
         tpl = tpl.replace('first_', '');
@@ -34,6 +39,7 @@ export const getRegExpTpl = (tpl, data) => {
     return tpl;
 };
 
+/** Условия */
 export const getIfTpl = (tpl, data) => {
     const [ifTpl, varTpl] = tpl.split(' ? ');
     const [trueTpl, falseTpl] = varTpl.split(' : ');
@@ -56,6 +62,7 @@ export const getIfTpl = (tpl, data) => {
     return result ? trueTpl : falseTpl;
 };
 
+/** Деление */
 export const getToTpl = (tpl, data) => {
     let [op1, op2] = tpl.split('_to_');
 
@@ -70,7 +77,9 @@ export const getToTpl = (tpl, data) => {
     return op1 / op2;
 };
 
+/** Процент от числа */
 export const getPercentToTpl = (tpl, data) => {
+    // ["col_2", "col_3"] = "col_2_percentTo_col_3".split('_percentTo_')
     let [op1, op2] = tpl.split('_percentTo_');
 
     if (/col_\d/.test(op1)) {
@@ -82,4 +91,23 @@ export const getPercentToTpl = (tpl, data) => {
     }
 
     return (op1 * 100) / op2;
+};
+
+/** Процент от числа минус число */
+export const getPercentToTplMinusNum = (tpl, data) => {
+
+    // ["col_2", "col_3_minus_100"] = "col_2_percent_of_col_3_minus_100".split('_percent_of_')
+    let [op1, op2] = tpl.split('_percent_of_');
+    // ["col_3", "number"] = "col_3_minus_100".split('_minus_')
+    let [op3, deductible] = op2.split('_minus_');
+
+    if (/col_\d/.test(op1)) {
+        op1 = getRegExpTpl(op1, data);
+    }
+
+    if (/col_\d/.test(op3)) {
+        op3 = getRegExpTpl(op3, data);
+    }
+
+    return +((op1 * 100) / op3).toFixed(4) - +deductible;
 };
